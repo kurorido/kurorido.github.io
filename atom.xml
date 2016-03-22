@@ -4,7 +4,7 @@
   <title><![CDATA[Roliroli's Blog - Creative thinking is useless unless you know how to sell it]]></title>
   <link href="http://kurorido.github.io/atom.xml" rel="self"/>
   <link href="http://kurorido.github.io/"/>
-  <updated>2016-03-23T03:33:25+08:00</updated>
+  <updated>2016-03-23T04:00:56+08:00</updated>
   <id>http://kurorido.github.io/</id>
   <author>
     <name><![CDATA[kuroridoplayer@gmail.com]]></name>
@@ -54,19 +54,99 @@
 
 <h2>API Overview</h2>
 
-<p>你可以在 <a href="http://developer.android.com/intl/zh-tw/reference/android/animation/package-summary.html">android.animation</a> 這個 package 下找到大部分的 Property Animation 的類別，不過在 Interpolator 的部分則是大多與過去的 <a href="http://developer.android.com/intl/zh-tw/reference/android/view/animation/package-summary.html">View Animation</a> 共用</p>
+<p>你可以在 <a target="_blank" href="http://developer.android.com/intl/zh-tw/reference/android/animation/package-summary.html">android.animation</a> 這個 package 下找到大部分的 Property Animation 的類別，不過在 Interpolator 的部分則是大多與過去的 <a target="_blank" href="http://developer.android.com/intl/zh-tw/reference/android/view/animation/package-summary.html">View Animation</a> 共用</p>
 
 <p>在 Property Animation 中，主要的 API 有下列幾項</p>
 
 <ul>
-<li>Animator</li>
+<li><p>Animator</p>
+
+<ul>
 <li>ValueAnimator</li>
 <li>ObjectAnimator</li>
-<li><p>AnimatorSet</p></li>
+<li>AnimatorSet</li>
+</ul>
+</li>
 <li><p>Evaluators</p></li>
 <li><p>Interpolators</p></li>
 </ul>
 
+
+<h2>View Property &amp; Quick Example</h2>
+
+<p>Android 當中的 View 有許多屬性可以直接進行動畫</p>
+
+<ul>
+<li>View.ALPHA</li>
+<li>View.ROTATION</li>
+<li>View.ROTATION_X</li>
+<li>View.ROTATION_Y</li>
+<li>View.SCALE_X</li>
+<li>View.SCALE_Y</li>
+<li>View.TRANSLATION_X</li>
+<li>View.TRANSLATION_Y</li>
+<li>View.TRANSLATION_Z (After API Level 21)</li>
+<li>View.X</li>
+<li>View.Y</li>
+<li>View.Z (After API Level 21)</li>
+</ul>
+
+
+<p>下面是一個動畫的例子</p>
+
+<figure class='code'><figcaption><span>java </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">PropertyValuesHolder</span> <span class="n">pvhX</span> <span class="o">=</span> <span class="n">PropertyValuesHolder</span><span class="o">.</span><span class="na">ofFloat</span><span class="o">(</span><span class="n">View</span><span class="o">.</span><span class="na">X</span><span class="o">,</span> <span class="mi">50</span><span class="n">f</span><span class="o">);</span>
+</span><span class='line'><span class="n">PropertyValuesHolder</span> <span class="n">pvhY</span> <span class="o">=</span> <span class="n">PropertyValuesHolder</span><span class="o">.</span><span class="na">ofFloat</span><span class="o">(</span><span class="n">View</span><span class="o">.</span><span class="na">Y</span><span class="o">,</span> <span class="mi">100</span><span class="n">f</span><span class="o">);</span>
+</span><span class='line'><span class="n">ObjectAnimator</span> <span class="n">anim</span> <span class="o">=</span> <span class="n">ObjectAnimator</span><span class="o">.</span><span class="na">ofPropertyValuesHolder</span><span class="o">(</span><span class="n">mTextView</span><span class="o">,</span> <span class="n">pvhX</span><span class="o">,</span> <span class="n">pvhY</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">anim</span><span class="o">.</span><span class="na">setDuration</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+</span><span class='line'><span class="n">anim</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>更多實際的例子可以參考我的 Github Repositry: <a href="https://github.com/kurorido/Android-Animation-Example">Android Animation Example</a> 快速了解每一種動畫效果</p>
+
+<h2>Animation Listeners</h2>
+
+<p>在 Animation 的開始、進行、結束上，可以註冊 Listener 來進行額外操作</p>
+
+<ul>
+<li>Animator.AnimatorListener
+
+<ul>
+<li>onAnimationStart() - Called when the animation starts.</li>
+<li>onAnimationEnd() - Called when the animation ends.</li>
+<li>onAnimationRepeat() - Called when the animation repeats itself.</li>
+<li>onAnimationCancel() - Called when the animation is canceled. A cancelled animation also calls</li>
+<li>onAnimationEnd(), regardless of how they were ended.</li>
+</ul>
+</li>
+</ul>
+
+
+<p>甚至是任何的 Value Update 都能夠客製化</p>
+
+<ul>
+<li>ValueAnimator.AnimatorUpdateListener
+
+<ul>
+<li>onAnimationUpdate()</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>XML Directory - Animator? Animation?</h2>
+
+<p>為了要跟 View Animation 區別，新的 Property Animation 是放在 /res/animator/ 資料夾底下，過去的 View Animation 則是放在 /res/anim 底下</p>
+
+<p>關於如何用 XML 動畫可以參考 <a target="_blank" href="http://developer.android.com/intl/zh-tw/guide/topics/resources/animation-resource.html#Property">Android Animation Resource</a></p>
 ]]></content>
   </entry>
   
