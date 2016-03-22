@@ -4,7 +4,7 @@
   <title><![CDATA[Roliroli's Blog - Creative thinking is useless unless you know how to sell it]]></title>
   <link href="http://kurorido.github.io/atom.xml" rel="self"/>
   <link href="http://kurorido.github.io/"/>
-  <updated>2016-03-23T04:00:56+08:00</updated>
+  <updated>2016-03-23T04:04:19+08:00</updated>
   <id>http://kurorido.github.io/</id>
   <author>
     <name><![CDATA[kuroridoplayer@gmail.com]]></name>
@@ -94,8 +94,7 @@
 
 <p>下面是一個動畫的例子</p>
 
-<figure class='code'><figcaption><span>java </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
