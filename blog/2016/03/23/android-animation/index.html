@@ -2,10 +2,10 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Category: Misc - Roliroli's Blog - Creative thinking is useless unless you know how to sell it</title>
+  <title>Android Animation - Roliroli's Blog - Creative thinking is useless unless you know how to sell it</title>
   <meta name="author" content="kuroridoplayer@gmail.com">
 
-  <meta name="description" content="Category: misc">
+  <meta name="description" content="Android 主要有兩種 Animation System，這篇文章專注在介紹較新的 Property Animation">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -14,16 +14,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://kurorido.github.io/blog/categories/misc/">
+  <link rel="canonical" href="http://kurorido.github.io/blog/2016/03/23/android-animation/">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="Roliroli's Blog - Creative thinking is useless unless you know how to sell it" type="application/atom+xml">
   <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://kurorido.github.io/blog/categories/misc/">
-  <meta property="og:title" content="Category: Misc - Roliroli's Blog - Creative thinking is useless unless you know how to sell it">
-  <meta property="og:description" content="Category: misc">
+  <meta property="og:url" content="http://kurorido.github.io/blog/2016/03/23/android-animation/">
+  <meta property="og:title" content="Android Animation - Roliroli's Blog - Creative thinking is useless unless you know how to sell it">
+  <meta property="og:description" content="Android 主要有兩種 Animation System，這篇文章專注在介紹較新的 Property Animation">
 
   <script src="/javascripts/libs/jquery/jquery-2.1.3.min.js"></script>
 
@@ -57,10 +57,10 @@
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li >
+                <li class="active">
                     <a rel="index" href="/">Blog</a>
                 </li>
-                <li class="active">
+                <li >
                     <a href="/blog/archives">Archives</a>
                 </li>
             </ul>
@@ -95,81 +95,160 @@
       <div id="main" role="main" class="container">
         <div id="content">
           <div class="row">
-  <div class="page-content col-md-9">
-    <article role="article">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="Roliroli's Blog - Creative thinking is useless unless you know how to sell it" />
+    <meta itemprop="description" content="Roliroli's blog site, blogging the work and life.  I'm a developer focus on web and mobile developmenet technology." />
+    <meta itemprop="url" content="http://kurorido.github.io" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       
-        <header class="page-header">
+  <header class="page-header">
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Android Animation
+        
+    </h1>
+    
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-03-23T02:30:53+08:00"  data-updated="true" itemprop="datePublished dateCreated">Wed 23 Mar 2016,  2:30 AM</time>
+        
+      </p>
+    
+    <hr/>
+  </header>
+
+
+<div class="entry-content clearfix" itemprop="articleBody description"><p>Android 主要有兩種 Animation System，這篇文章專注在介紹較新的 Property Animation</p>
+
+<h2>Overview</h2>
+
+<blockquote><p>Android framework provides two animation systems: property animation (introduced in Android 3.0) and view animation.</p></blockquote>
+
+<!-- more -->
+
+
+<h2>How Property Animation Differs from View Animation</h2>
+
+<p>首先先說明一下這兩者的差別</p>
+
+<p>在過去 View Animation 只能夠對繼承 View 類別的物件進行屬性變化，而且還有一個致命的缺點就是 View Animation 其實只是改變 View 繪圖的座標，並非實際改變 View 類別本身，這就會發生一個 Button 被移動後，觸發 Click 事件的座標卻還留在原地的情況。</p>
+
+<h2>Property Animation</h2>
+
+<p>A property animation changes a property&rsquo;s (a field in an object) value over a specified length of time.</p>
+
+<ul>
+<li>Duration (屬性變化時間總長)</li>
+<li>Time interpolation  (屬性變化函數)</li>
+<li>Repeat count and behavior</li>
+<li>Animator sets</li>
+<li>Frame refresh delay</li>
+</ul>
+
+
+<h2>How Property Animation Works</h2>
+
+<p>Property Animation 的運作方式就是使用 ValueAnimator 這個類別，給予物件動畫開始時和結束時的屬性值以及整個動畫經過的 Duration</p>
+
+<p>當你呼叫 ValueAnimator.start() 就會讓動畫開始，物件的屬性會藉由內部的 Interpolator 隨著妳設定的 Duration 進行改變 (預設是線性變化)</p>
+
+<h2>API Overview</h2>
+
+<p>你可以在 <a href="http://developer.android.com/intl/zh-tw/reference/android/animation/package-summary.html">android.animation</a> 這個 package 下找到大部分的 Property Animation 的類別，不過在 Interpolator 的部分則是大多與過去的 <a href="http://developer.android.com/intl/zh-tw/reference/android/view/animation/package-summary.html">View Animation</a> 共用</p>
+
+<p>在 Property Animation 中，主要的 API 有下列幾項</p>
+
+<ul>
+<li>Animator</li>
+<li>ValueAnimator</li>
+<li>ObjectAnimator</li>
+<li><p>AnimatorSet</p></li>
+<li><p>Evaluators</p></li>
+<li><p>Interpolators</p></li>
+</ul>
+
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
           
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">kuroridoplayer@gmail.com</span></span>
+
           
-            <h1 class="entry-title">
-              Category: Misc
-              
-            </h1>
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-03-23T02:30:53+08:00"  data-updated="true" itemprop="datePublished dateCreated">Wed 23 Mar 2016,  2:30 AM</time>
           
-        </header>
-      
-      <div class="entry-content">
-        <div id="blog-archives" class="category" itemscope itemtype="http://schema.org/Blog">
-<meta itemprop="name" content="Roliroli's Blog - Creative thinking is useless unless you know how to sell it" />
-<meta itemprop="description" content="Roliroli's blog site, blogging the work and life.  I'm a developer focus on web and mobile developmenet technology." />
-<meta itemprop="url" content="http://kurorido.github.io" />
-
-
-
-  
-  <h2 class="year">2016</h2>
-
-<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-  
-<h2 class="post-title" itemprop="name headline"><a href="/blog/2016/03/23/create-my-first-github-page/" itemprop="url">建立自己的第一個 Github Page</a></h2>
-<p class="meta text-muted">
-  
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-03-23T00:54:15+08:00"  data-updated="true" itemprop="datePublished dateCreated">Wed 23 Mar 2016, 12:54 AM</time>
-  
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/misc/'>misc</a>
+    <a class='category' href='/blog/categories/android/'>android</a>
   
 </span>
 
 
-</p>
-
-</article>
-
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://kurorido.github.io/blog/2016/03/23/android-animation/" data-via="" data-counturl="http://kurorido.github.io/blog/2016/03/23/android-animation/" >Tweet</a>
+  
+  
+  
 </div>
 
-      </div>
-      
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2016/03/23/create-my-first-github-page/" title="Previous Post: 建立自己的第一個 Github Page">&laquo; 建立自己的第一個 Github Page</a></li>
+            
+            
+          </ul>
+        
+      </footer>
     </article>
     
   </div>
 
   
-    <aside class="sidebar col-md-3">
-      
-        <section class="panel panel-default">
+  <aside class="sidebar col-md-3">
+    
+      <section class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Recent Posts</h3>
   </div>
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2016/03/23/android-animation/">Android Animation</a>
+    <a class="list-group-item active" href="/blog/2016/03/23/android-animation/">Android Animation</a>
     
     <a class="list-group-item " href="/blog/2016/03/23/create-my-first-github-page/">建立自己的第一個 Github Page</a>
     
@@ -181,8 +260,8 @@
 
 
 
-      
-    </aside>
+    
+  </aside>
   
 </div>
 

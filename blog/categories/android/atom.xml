@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Android | Roliroli's Blog - Creative thinking is useless unless you know how to sell it]]></title>
+  <link href="http://kurorido.github.io/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://kurorido.github.io/"/>
+  <updated>2016-03-23T03:33:25+08:00</updated>
+  <id>http://kurorido.github.io/</id>
+  <author>
+    <name><![CDATA[kuroridoplayer@gmail.com]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Android Animation]]></title>
+    <link href="http://kurorido.github.io/blog/2016/03/23/android-animation/"/>
+    <updated>2016-03-23T02:30:53+08:00</updated>
+    <id>http://kurorido.github.io/blog/2016/03/23/android-animation</id>
+    <content type="html"><![CDATA[<p>Android 主要有兩種 Animation System，這篇文章專注在介紹較新的 Property Animation</p>
+
+<h2>Overview</h2>
+
+<blockquote><p>Android framework provides two animation systems: property animation (introduced in Android 3.0) and view animation.</p></blockquote>
+
+<!-- more -->
+
+
+<h2>How Property Animation Differs from View Animation</h2>
+
+<p>首先先說明一下這兩者的差別</p>
+
+<p>在過去 View Animation 只能夠對繼承 View 類別的物件進行屬性變化，而且還有一個致命的缺點就是 View Animation 其實只是改變 View 繪圖的座標，並非實際改變 View 類別本身，這就會發生一個 Button 被移動後，觸發 Click 事件的座標卻還留在原地的情況。</p>
+
+<h2>Property Animation</h2>
+
+<p>A property animation changes a property&rsquo;s (a field in an object) value over a specified length of time.</p>
+
+<ul>
+<li>Duration (屬性變化時間總長)</li>
+<li>Time interpolation  (屬性變化函數)</li>
+<li>Repeat count and behavior</li>
+<li>Animator sets</li>
+<li>Frame refresh delay</li>
+</ul>
+
+
+<h2>How Property Animation Works</h2>
+
+<p>Property Animation 的運作方式就是使用 ValueAnimator 這個類別，給予物件動畫開始時和結束時的屬性值以及整個動畫經過的 Duration</p>
+
+<p>當你呼叫 ValueAnimator.start() 就會讓動畫開始，物件的屬性會藉由內部的 Interpolator 隨著妳設定的 Duration 進行改變 (預設是線性變化)</p>
+
+<h2>API Overview</h2>
+
+<p>你可以在 <a href="http://developer.android.com/intl/zh-tw/reference/android/animation/package-summary.html">android.animation</a> 這個 package 下找到大部分的 Property Animation 的類別，不過在 Interpolator 的部分則是大多與過去的 <a href="http://developer.android.com/intl/zh-tw/reference/android/view/animation/package-summary.html">View Animation</a> 共用</p>
+
+<p>在 Property Animation 中，主要的 API 有下列幾項</p>
+
+<ul>
+<li>Animator</li>
+<li>ValueAnimator</li>
+<li>ObjectAnimator</li>
+<li><p>AnimatorSet</p></li>
+<li><p>Evaluators</p></li>
+<li><p>Interpolators</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>
