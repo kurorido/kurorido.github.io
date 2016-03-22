@@ -4,6 +4,7 @@ title: "建立自己的第一個 Github Page"
 date: 2016-03-23 00:54:15 +0800
 comments: true
 categories: misc
+description: 研究了主要兩種 Solution, 第一種是 jekyll 另外一種是基於 jekyll 的框架 Octpress。兩者架起來都不難，但是 jekyll 的初始版本比較陽春，octpress 則會先包好一些第三方的套件 (尤其是社交以及追蹤分析的部分)
 ---
 
 研究了主要兩種 Solution, 第一種是 jekyll 另外一種是基於 jekyll 的框架 Octpress。

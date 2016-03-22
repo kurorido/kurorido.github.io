@@ -1,5 +1,14 @@
 /* from whiterspace */
 article {
+  background-color: #F1F1F1;
+  padding: 30px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  hr {
+    margin-top: 0;
+    margin-bottom: 0;
+    border-top: 1px solid #333333;
+  }
   img, video, .flash-video {
     @extend .flex-content;
     @extend .basic-alignment;
