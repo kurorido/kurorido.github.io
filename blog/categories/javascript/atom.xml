@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Javascript | Roliroli's Blog - Creative thinking is useless unless you know how to sell it]]></title>
+  <link href="http://kurorido.github.io/blog/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://kurorido.github.io/"/>
+  <updated>2016-03-24T18:00:22+08:00</updated>
+  <id>http://kurorido.github.io/</id>
+  <author>
+    <name><![CDATA[kuroridoplayer@gmail.com]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[What I Have Learned From JSConf Topic What the Heck Is the Event Loop Anyway]]></title>
+    <link href="http://kurorido.github.io/blog/2016/03/24/what-i-have-learned-from-jsconf-topic-what-the-heck-is-the-event-loop-anyway/"/>
+    <updated>2016-03-24T17:35:42+08:00</updated>
+    <id>http://kurorido.github.io/blog/2016/03/24/what-i-have-learned-from-jsconf-topic-what-the-heck-is-the-event-loop-anyway</id>
+    <content type="html"><![CDATA[<p>觀看 Youtube 上 JSConf 的影片稍微整理了一下筆記</p>
+
+<p>這個影片的內容簡單的介紹了 Javascript 運作的方法</p>
+
+<p>但我覺得還是沒講到很深的 event loop 到底是什麼&hellip;</p>
+
+<!-- more -->
+
+
+
+
+<div class="video-container">
+<iframe width="100%" height="480" src="https://www.youtube.com/embed/8aGhZQkoFbQ" frameborder="0" allowfullscreen></iframe>
+</div>
+
+
+<p>首先要先理解 Javascript 跑在瀏覽器上時大致分成三個層面</p>
+
+<ul>
+<li>Call Stack</li>
+<li>Web Apis</li>
+<li>Callback Queue</li>
+</ul>
+
+
+<p>Javascript 本身是 single thread 在運作的，所以所有的 Function Call 都會進入 Call Stack，當中只要有需要跑很久的 Task 在中間的話就會 Block 住下一個 Function Call</p>
+
+<p>這時候可以透過 WebApis 的 setTimeout(cb, 0) 來將 function call 變成非同步(Async)，可以讓需要跑很久的 Task 在運作完成後推入 Callback Queue，並且在適當的時間點推回 Call Stack</p>
+
+<p>主講人介紹了他製作的 <a href="http://latentflip.com/loupe/?" target="_blank">Call Stack 視覺化工具</a></p>
+
+<p>實際在視覺化工具上跑下面這段 code 並且觀察 call stack 和 callback queue 的變化</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// Synchronous</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">].</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+</span><span class='line'><span class="p">})</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// Asynchronous</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">asyncForEach</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="nx">cb</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">array</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">cb</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">asyncForEach</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>另外值得注意的是主講人有提到 setTimeout 的 timeout 並非是保證多久之後會執行的時間&hellip;</p>
+]]></content>
+  </entry>
+  
+</feed>
