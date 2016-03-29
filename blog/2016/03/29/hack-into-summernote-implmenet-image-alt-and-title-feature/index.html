@@ -2,10 +2,10 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Category: Javascript - Roliroli's Blog - Creative thinking is useless unless you know how to sell it</title>
+  <title>Hack Into Summernote - Implmenet Image Alt and Title Feature - Roliroli's Blog - Creative thinking is useless unless you know how to sell it</title>
   <meta name="author" content="kuroridoplayer@gmail.com">
 
-  <meta name="description" content="Category: javascript">
+  
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -14,16 +14,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://kurorido.github.io/blog/categories/javascript/">
+  <link rel="canonical" href="http://kurorido.github.io/blog/2016/03/29/hack-into-summernote-implmenet-image-alt-and-title-feature/">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="Roliroli's Blog - Creative thinking is useless unless you know how to sell it" type="application/atom+xml">
   <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://kurorido.github.io/blog/categories/javascript/">
-  <meta property="og:title" content="Category: Javascript - Roliroli's Blog - Creative thinking is useless unless you know how to sell it">
-  <meta property="og:description" content="Category: javascript">
+  <meta property="og:url" content="http://kurorido.github.io/blog/2016/03/29/hack-into-summernote-implmenet-image-alt-and-title-feature/">
+  <meta property="og:title" content="Hack Into Summernote - Implmenet Image Alt and Title Feature - Roliroli's Blog - Creative thinking is useless unless you know how to sell it">
+  
 
   <script src="/javascripts/libs/jquery/jquery-2.1.3.min.js"></script>
 
@@ -66,10 +66,10 @@
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li >
+                <li class="active">
                     <a rel="index" href="/">Blog</a>
                 </li>
-                <li class="active">
+                <li >
                     <a href="/blog/archives">Archives</a>
                 </li>
             </ul>
@@ -104,35 +104,22 @@
       <div id="main" role="main" class="container">
         <div id="content">
           <div class="row">
-  <div class="page-content col-md-9">
-    <article role="article">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="Roliroli's Blog - Creative thinking is useless unless you know how to sell it" />
+    <meta itemprop="description" content="Roliroli's blog site, blogging the work and life.  I'm a developer focus on web and mobile developmenet technology." />
+    <meta itemprop="url" content="http://kurorido.github.io" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       
-        <header class="page-header">
-          
-          
-            <h1 class="entry-title">
-              Category: Javascript
-              
-            </h1>
-          
-        </header>
-      
-      <div class="entry-content">
-        <div id="blog-archives" class="category" itemscope itemtype="http://schema.org/Blog">
-<meta itemprop="name" content="Roliroli's Blog - Creative thinking is useless unless you know how to sell it" />
-<meta itemprop="description" content="Roliroli's blog site, blogging the work and life.  I'm a developer focus on web and mobile developmenet technology." />
-<meta itemprop="url" content="http://kurorido.github.io" />
-
-
-
-  
-  <h2 class="year">2016</h2>
-
-<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-  
-<h2 class="post-title" itemprop="name headline"><a href="/blog/2016/03/29/hack-into-summernote-implmenet-image-alt-and-title-feature/" itemprop="url">Hack Into Summernote - Implmenet Image Alt and Title Feature</a></h2>
-<p class="meta text-muted">
-  
+  <header class="page-header">
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Hack Into Summernote - Implmenet Image Alt and Title Feature
+        
+    </h1>
+    
+    
+      <p class="meta text-muted text-uppercase">
+        
 
 
 
@@ -146,73 +133,112 @@
 
 
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-03-29T23:03:52+08:00"  data-updated="true" itemprop="datePublished dateCreated">Tue 29 Mar 2016, 11:03 PM</time>
-  
-
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/javascript/'>javascript</a>
-  
-</span>
+        
+      </p>
+    
+    <hr/>
+  </header>
 
 
-</p>
+<div class="entry-content clearfix" itemprop="articleBody description"><h2>Introduction</h2>
 
-</article>
+<p><a href='https://github.com/summernote/summernote'>Summernote</a> is an open source WYSIWYG editor like tinymce or ckeditor. I like it because it already implements almost the necessary features.  However, it lacks of function to add &lsquo;alt&rsquo; &amp; &lsquo;title&rsquo; attributes, which are important to SEO, on image elements.  This articles is to tell you how to hack into summernote and implement this feature by yourself.</p>
 
-
-
-<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-  
-<h2 class="post-title" itemprop="name headline"><a href="/blog/2016/03/24/what-i-have-learned-from-jsconf-topic-what-the-heck-is-the-event-loop-anyway/" itemprop="url">What I Have Learned From JSConf Topic What the Heck Is the Event Loop Anyway</a></h2>
-<p class="meta text-muted">
-  
+<!-- more -->
 
 
+<h2>Prerequisite</h2>
+
+<ul>
+<li>know how to build up summernote with Grunt</li>
+<li>I&rsquo;m using the version base on developer branch commit (251e68d) - after version 0.8.1</li>
+</ul>
 
 
+<h2>Summernote Structure Brief</h2>
 
+<p>Almost all core source code is put under src/js directory and the core of summernote is under src/js/base directory.</p>
 
+<h2>Steps</h2>
 
+<p>you can see all commit change <a href='https://github.com/kurorido/summernote/commit/f8beafc227d68c8ebe9514235b43648a40383716'>here</a> and the following is the reason why change those file.</p>
 
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-03-24T17:35:42+08:00"  data-updated="true" itemprop="datePublished dateCreated">Thu 24 Mar 2016,  5:35 PM</time>
-  
-
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/javascript/'>javascript</a>
-  
-</span>
-
-
-</p>
-
-</article>
+<ul>
+<li>Step 1 - Create our own ImagePropertiesDialog.js under bs3/module directory.</li>
+<li>Step 2 - Modify bs3/settings.js to register this module.</li>
+<li>Step 3 - Modify bs3/module/Button.js to give an entry point for this module.</li>
+<li>Step 4 - Implement communication function between editor and dialog in base/module/Editor.js</li>
+</ul>
 
 </div>
 
-      </div>
-      
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">kuroridoplayer@gmail.com</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-03-29T23:03:52+08:00"  data-updated="true" itemprop="datePublished dateCreated">Tue 29 Mar 2016, 11:03 PM</time>
+          
+
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://kurorido.github.io/blog/2016/03/29/hack-into-summernote-implmenet-image-alt-and-title-feature/" data-via="" data-counturl="http://kurorido.github.io/blog/2016/03/29/hack-into-summernote-implmenet-image-alt-and-title-feature/" >Tweet</a>
+  
+  
+  
+</div>
+
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2016/03/24/what-i-have-learned-from-jsconf-topic-what-the-heck-is-the-event-loop-anyway/" title="Previous Post: What I have learned from JSConf Topic What the heck is the event loop anyway">&laquo; What I have learned from JSConf Topic What the heck is the event loop anyway</a></li>
+            
+            
+          </ul>
+        
+      </footer>
     </article>
     
   </div>
 
   
-    <aside class="sidebar col-md-3">
-      
-        <section class="panel panel-default">
+  <aside class="sidebar col-md-3">
+    
+      <section class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Recent Posts</h3>
   </div>
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2016/03/29/hack-into-summernote-implmenet-image-alt-and-title-feature/">Hack Into Summernote - Implmenet Image Alt and Title Feature</a>
+    <a class="list-group-item active" href="/blog/2016/03/29/hack-into-summernote-implmenet-image-alt-and-title-feature/">Hack Into Summernote - Implmenet Image Alt and Title Feature</a>
     
     <a class="list-group-item " href="/blog/2016/03/24/what-i-have-learned-from-jsconf-topic-what-the-heck-is-the-event-loop-anyway/">What I Have Learned From JSConf Topic What the Heck Is the Event Loop Anyway</a>
     
@@ -228,8 +254,14 @@
 
 
 
-      
-    </aside>
+    
+    <section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Categories</h3>
+  </div>
+  <ul id="category-list"><li><a href='/blog/categories/android'>android (1)</a></li><li><a href='/blog/categories/javascript'>javascript (2)</a></li><li><a href='/blog/categories/misc'>misc (1)</a></li></ul>
+</section>
+  </aside>
   
 </div>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Roliroli's Blog - Creative thinking is useless unless you know how to sell it]]></title>
   <link href="http://kurorido.github.io/atom.xml" rel="self"/>
   <link href="http://kurorido.github.io/"/>
-  <updated>2016-03-24T18:00:22+08:00</updated>
+  <updated>2016-03-29T23:32:43+08:00</updated>
   <id>http://kurorido.github.io/</id>
   <author>
     <name><![CDATA[kuroridoplayer@gmail.com]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hack Into Summernote - Implmenet Image Alt and Title Feature]]></title>
+    <link href="http://kurorido.github.io/blog/2016/03/29/hack-into-summernote-implmenet-image-alt-and-title-feature/"/>
+    <updated>2016-03-29T23:03:52+08:00</updated>
+    <id>http://kurorido.github.io/blog/2016/03/29/hack-into-summernote-implmenet-image-alt-and-title-feature</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p><a href='https://github.com/summernote/summernote'>Summernote</a> is an open source WYSIWYG editor like tinymce or ckeditor. I like it because it already implements almost the necessary features.  However, it lacks of function to add &lsquo;alt&rsquo; &amp; &lsquo;title&rsquo; attributes, which are important to SEO, on image elements.  This articles is to tell you how to hack into summernote and implement this feature by yourself.</p>
+
+<!-- more -->
+
+
+<h2>Prerequisite</h2>
+
+<ul>
+<li>know how to build up summernote with Grunt</li>
+<li>I&rsquo;m using the version base on developer branch commit (251e68d) - after version 0.8.1</li>
+</ul>
+
+
+<h2>Summernote Structure Brief</h2>
+
+<p>Almost all core source code is put under src/js directory and the core of summernote is under src/js/base directory.</p>
+
+<h2>Steps</h2>
+
+<p>you can see all commit change <a href='https://github.com/kurorido/summernote/commit/f8beafc227d68c8ebe9514235b43648a40383716'>here</a> and the following is the reason why change those file.</p>
+
+<ul>
+<li>Step 1 - Create our own ImagePropertiesDialog.js under bs3/module directory.</li>
+<li>Step 2 - Modify bs3/settings.js to register this module.</li>
+<li>Step 3 - Modify bs3/module/Button.js to give an entry point for this module.</li>
+<li>Step 4 - Implement communication function between editor and dialog in base/module/Editor.js</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[What I Have Learned From JSConf Topic What the Heck Is the Event Loop Anyway]]></title>
