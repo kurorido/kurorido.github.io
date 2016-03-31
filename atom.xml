@@ -4,7 +4,7 @@
   <title><![CDATA[Roliroli's Blog - Creative thinking is useless unless you know how to sell it]]></title>
   <link href="http://kurorido.github.io/atom.xml" rel="self"/>
   <link href="http://kurorido.github.io/"/>
-  <updated>2016-03-29T23:32:43+08:00</updated>
+  <updated>2016-03-31T15:57:07+08:00</updated>
   <id>http://kurorido.github.io/</id>
   <author>
     <name><![CDATA[kuroridoplayer@gmail.com]]></name>
@@ -12,6 +12,165 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Laravel Theme Survey - How Style and Scripts Register and Render?]]></title>
+    <link href="http://kurorido.github.io/blog/2016/03/31/laravel-theme-survey-how-style-and-scripts-register-and-render/"/>
+    <updated>2016-03-31T15:55:27+08:00</updated>
+    <id>http://kurorido.github.io/blog/2016/03/31/laravel-theme-survey-how-style-and-scripts-register-and-render</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>最近因為要在專案動態套用不同 Theme，所以研究了一下 <a href='https://github.com/teepluss/laravel-theme' rel='nofollow' target='_blank'>Laravel Theme</a> 大致上如何運作，基本上只研究了包含 Scripts, Styles 的部分，其他 Widget, Breadcumb 則因為沒用到所以沒有研究。</p>
+
+<!-- more -->
+
+
+<h2>基本的 call flow</h2>
+
+<ol>
+<li>Theme->uses()->layout() 初始化 Theme</li>
+<li>Theme->asset()->usePath()->add() 加入 Style, Scripts</li>
+<li>最後在 blade 的部分透過 Theme::asset()->styles() 輸出 styles</li>
+</ol>
+
+
+<h2>實際看下面的 code flow</h2>
+
+<figure class='code'><figcaption><span>加入 Styles, Scripts  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="c1">// Theme.php</span>
+</span><span class='line'><span class="k">public</span> <span class="k">function</span> <span class="nf">asset</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">asset</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Asset.php</span>
+</span><span class='line'><span class="k">public</span> <span class="k">function</span> <span class="nf">__call</span><span class="p">(</span><span class="nv">$method</span><span class="p">,</span> <span class="nv">$parameters</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">call_user_func_array</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="k">static</span><span class="o">::</span><span class="na">container</span><span class="p">(),</span> <span class="nv">$method</span><span class="p">),</span> <span class="nv">$parameters</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 這邊取得相對應的 AssetContainer instance</span>
+</span><span class='line'><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">container</span><span class="p">(</span><span class="nv">$container</span> <span class="o">=</span> <span class="s1">&#39;default&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nb">isset</span><span class="p">(</span><span class="k">static</span><span class="o">::</span><span class="nv">$containers</span><span class="p">[</span><span class="nv">$container</span><span class="p">]))</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">static</span><span class="o">::</span><span class="nv">$containers</span><span class="p">[</span><span class="nv">$container</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AssetContainer</span><span class="p">(</span><span class="nv">$container</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="k">static</span><span class="o">::</span><span class="nv">$containers</span><span class="p">[</span><span class="nv">$container</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// AssetContainer.php</span>
+</span><span class='line'><span class="k">protected</span> <span class="k">function</span> <span class="nf">added</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$source</span><span class="p">,</span> <span class="nv">$dependencies</span> <span class="o">=</span> <span class="k">array</span><span class="p">(),</span> <span class="nv">$attributes</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// skip... 這邊會串到 style 或是 script function 註冊 resources</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 以 script 為例</span>
+</span><span class='line'><span class="k">public</span> <span class="k">function</span> <span class="nf">script</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$source</span><span class="p">,</span> <span class="nv">$dependencies</span> <span class="o">=</span> <span class="k">array</span><span class="p">(),</span> <span class="nv">$attributes</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Prepaend path to theme.</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">isUsePath</span><span class="p">())</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="nv">$source</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">evaluatePath</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getCurrentPath</span><span class="p">()</span><span class="o">.</span><span class="nv">$source</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Reset using path.</span>
+</span><span class='line'>        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">usePath</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">,</span> <span class="nv">$source</span><span class="p">,</span> <span class="nv">$dependencies</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$this</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>最後來看如何輸出</h2>
+
+<figure class='code'><figcaption><span>在 Blade 內輸出 Styles, Scripts  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="c1">// 一樣透過 Asset.php 的 magic method 操作 AssetContainer</span>
+</span><span class='line'><span class="k">public</span> <span class="k">function</span> <span class="nf">__call</span><span class="p">(</span><span class="nv">$method</span><span class="p">,</span> <span class="nv">$parameters</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">call_user_func_array</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="k">static</span><span class="o">::</span><span class="na">container</span><span class="p">(),</span> <span class="nv">$method</span><span class="p">),</span> <span class="nv">$parameters</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// AssetContainer.php</span>
+</span><span class='line'><span class="k">public</span> <span class="k">function</span> <span class="nf">styles</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;style&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">protected</span> <span class="k">function</span> <span class="nf">asset</span><span class="p">(</span><span class="nv">$group</span><span class="p">,</span> <span class="nv">$name</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// ... skip</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">html</span><span class="p">(</span><span class="nv">$group</span><span class="p">,</span> <span class="nv">$asset</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">],</span> <span class="nv">$asset</span><span class="p">[</span><span class="s1">&#39;attributes&#39;</span><span class="p">]);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hack Into Summernote - Implmenet Image Alt and Title Feature]]></title>
