@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://kurorido.github.io/blog/2016/04/07/how-to-set-android-system-date-by-adb-command/</loc>
+<lastmod>2016-04-07T14:51:32+08:00</lastmod>
+</url>
+<url>
 <loc>http://kurorido.github.io/blog/2016/03/31/laravel-theme-survey-how-style-and-scripts-register-and-render/</loc>
 <lastmod>2016-03-31T15:55:27+08:00</lastmod>
 </url>

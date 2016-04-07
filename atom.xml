@@ -4,7 +4,7 @@
   <title><![CDATA[Roliroli's Blog - Creative thinking is useless unless you know how to sell it]]></title>
   <link href="http://kurorido.github.io/atom.xml" rel="self"/>
   <link href="http://kurorido.github.io/"/>
-  <updated>2016-03-31T15:57:07+08:00</updated>
+  <updated>2016-04-07T14:56:35+08:00</updated>
   <id>http://kurorido.github.io/</id>
   <author>
     <name><![CDATA[kuroridoplayer@gmail.com]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to Set Android System Date by Adb Command?]]></title>
+    <link href="http://kurorido.github.io/blog/2016/04/07/how-to-set-android-system-date-by-adb-command/"/>
+    <updated>2016-04-07T14:51:32+08:00</updated>
+    <id>http://kurorido.github.io/blog/2016/04/07/how-to-set-android-system-date-by-adb-command</id>
+    <content type="html"><![CDATA[<p>Default SET format is &ldquo;MMDDhhmm[[CC]YY][.ss]&rdquo;, that&rsquo;s (2 digits each)
+month, day, hour (0-23), and minute. Optionally century, year, and second.</p>
+
+<h2>Example</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>date -u 040714441916.00
+</span><span class='line'>
+</span><span class='line'><span class="c"># Explain:</span>
+</span><span class='line'><span class="c"># 04 : 四月</span>
+</span><span class='line'><span class="c"># 07: 七日</span>
+</span><span class='line'><span class="c"># 14: 下午兩點</span>
+</span><span class='line'><span class="c"># 44: 四十四分</span>
+</span><span class='line'><span class="c"># 19: 20世紀 (0-based)</span>
+</span><span class='line'><span class="c"># 16: 16年</span>
+</span><span class='line'><span class="c"># 00: 0 秒</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Laravel Theme Survey - How Style and Scripts Register and Render?]]></title>
