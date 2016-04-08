@@ -4,7 +4,7 @@
   <title><![CDATA[Roliroli's Blog - Creative thinking is useless unless you know how to sell it]]></title>
   <link href="http://kurorido.github.io/atom.xml" rel="self"/>
   <link href="http://kurorido.github.io/"/>
-  <updated>2016-04-08T17:38:29+08:00</updated>
+  <updated>2016-04-08T19:06:54+08:00</updated>
   <id>http://kurorido.github.io/</id>
   <author>
     <name><![CDATA[kuroridoplayer@gmail.com]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Express Unless Package Must Use New RegExp()]]></title>
+    <link href="http://kurorido.github.io/blog/2016/04/08/express-unless-package-must-use-new-regexp/"/>
+    <updated>2016-04-08T19:03:30+08:00</updated>
+    <id>http://kurorido.github.io/blog/2016/04/08/express-unless-package-must-use-new-regexp</id>
+    <content type="html"><![CDATA[<p>最近使用了 express-unless 這套 package，發現 path 不管怎麼設定都不對</p>
+
+<p>後來發現一定得用 new RegExp(); 來帶入 path，不然會沒辦法被認為是正確的</p>
+
+<p>追到 lib/index.js 裡面的一行</p>
+
+<figure class='code'><figcaption><span>lib/index.js </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">p</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span> <span class="o">===</span> <span class="nx">url</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="nx">p</span> <span class="k">instanceof</span> <span class="nb">RegExp</span> <span class="o">&amp;&amp;</span> <span class="o">!!</span><span class="nx">p</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">url</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>因為這邊 p instanceof RegExp 如果使使用一般的 string expression 就不會通過 (ex. &lsquo;/\/path/g&rsquo;)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Package Study - Passport-jwt]]></title>
