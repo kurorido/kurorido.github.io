@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Javascript | Roliroli's Blog - Creative thinking is useless unless you know how to sell it]]></title>
   <link href="http://kurorido.github.io/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://kurorido.github.io/"/>
-  <updated>2016-04-07T14:56:35+08:00</updated>
+  <updated>2016-04-08T17:38:29+08:00</updated>
   <id>http://kurorido.github.io/</id>
   <author>
     <name><![CDATA[kuroridoplayer@gmail.com]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Package Study - Passport-jwt]]></title>
+    <link href="http://kurorido.github.io/blog/2016/04/08/package-study-passport-jwt/"/>
+    <updated>2016-04-08T17:33:28+08:00</updated>
+    <id>http://kurorido.github.io/blog/2016/04/08/package-study-passport-jwt</id>
+    <content type="html"><![CDATA[<p>先查看 index.js 會輸出兩個模組，</p>
+
+<p>其中 Strategy 需要實作 passport-strategy 的 authenticate 方法</p>
+
+<p><figure class='code'><figcaption><span>index.js </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">Strategy</span><span class="o">:</span> <span class="nx">Strategy</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">ExtractJwt</span> <span class="o">:</span> <span class="nx">ExtractJwt</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>在 authenticate 的部分</p>
+
+<p>JwtStrategy.JwtVerifier 其實是引入 verify_jwt.js 這隻檔案的模組
+事實上 verify_jwt 背後只是用 jsonwebtoken 這個 package 來做 verify 而已</p>
+
+<p><figure class='code'><figcaption><span>index.js </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// 先取出 token</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_jwtFromRequest</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// 如果 token 不存在就 fail</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">token</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">self</span><span class="p">.</span><span class="nx">fail</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">No</span> <span class="nx">auth</span> <span class="nx">token</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;));</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="c1">// 見 JwtStrategy.JwtVerifier = require(&amp;lsquo;./verify_jwt&amp;rsquo;);</span>
+</span><span class='line'><span class="nx">JwtStrategy</span><span class="p">.</span><span class="nx">JwtVerifier</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="o">&lt;</span><span class="nx">em</span><span class="o">&gt;</span><span class="nx">secretOrKey</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="o">&lt;</span><span class="err">/em&gt;verifOpts, function(jwt_err, payload) {</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">jwt_err</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 如果 validate 不過會 fail</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">self</span><span class="p">.</span><span class="nx">fail</span><span class="p">(</span><span class="nx">jwt_err</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span> <span class="c1">// 剩下的就是驗證項目&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>在實際使用的時候發現 self.fail 不會呼叫 passport verify 的 callback，需要改成 self.error</p>
+
+<p>因此我發了一筆 issues 在 gituhb 上
+<a href="https://github.com/themikenicholson/passport-jwt/issues/56">https://github.com/themikenicholson/passport-jwt/issues/56</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hack Into Summernote - Implmenet Image Alt and Title Feature]]></title>
