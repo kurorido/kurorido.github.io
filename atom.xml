@@ -4,7 +4,7 @@
   <title><![CDATA[Roliroli's Blog - Creative thinking is useless unless you know how to sell it]]></title>
   <link href="http://kurorido.github.io/atom.xml" rel="self"/>
   <link href="http://kurorido.github.io/"/>
-  <updated>2016-04-13T21:57:42+08:00</updated>
+  <updated>2016-04-13T22:00:49+08:00</updated>
   <id>http://kurorido.github.io/</id>
   <author>
     <name><![CDATA[kuroridoplayer@gmail.com]]></name>
@@ -20,7 +20,7 @@
     <id>http://kurorido.github.io/blog/2016/04/13/use-open-jtalk-on-ubuntu-14-dot-04</id>
     <content type="html"><![CDATA[<p>Open Jtalk 是一套可以把日文文字用電腦唸出來的軟體工具(Japanese text-to-speech system)</p>
 
-<p><a href="http://open-jtalk.sourceforge.net/" refl="nofollow" target="_blank">官網</a>上並沒有文件說明要如何安裝，所以只得自己研究</p>
+<p><a href="http://open-jtalk.sourceforge.net/" rel="nofollow" target="_blank">官網</a>上並沒有文件說明要如何安裝，所以只得自己研究</p>
 
 <!-- more -->
 
@@ -96,7 +96,7 @@
 
 <p>不過身為一個宅宅工程師，當然是希望可以聽到女生的聲音</p>
 
-<p>幸好有人製作出了這樣的聲音檔，可以在 MMDAgent 這個計畫中找到一個取名為 mei 的女性的聲音</p>
+<p>幸好有人製作出了這樣的聲音檔，可以在 <a href='http://www.mmdagent.jp/' rel="nofollow" target="_blank">MMDAgent</a> 這個計畫中找到一個取名為 mei 的女性的聲音</p>
 
 <p>這邊我們下載 MMDAgent &ldquo;Sample Script&rdquo; version 1.6 這個連結，在裡面的 VOICE/mei/ 資料夾中有著許多 htsvoice ，分別代表不同的語氣</p>
 
